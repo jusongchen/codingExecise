@@ -10,15 +10,16 @@ import (
 )
 
 //Analyze get all datasets and analyze each of them
-func (ds *Datasets) Analyze() *Datasets {
+func (ds Datasets) Analyze() error {
 	// fmt.Printf("\n\n%#v", ds)
 
-	destDS := Datasets{}
-	for _, d := range *ds {
-		d.analyze()
-		destDS = append(destDS, d)
+	for i, _ := range ds {
+		if err := ds[i].analyze(); err != nil {
+
+			return err
+		}
 	}
-	return &destDS
+	return nil
 }
 
 //analyze one file

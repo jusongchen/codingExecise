@@ -29,7 +29,7 @@ type Datasets []Dataset
 const (
 	TOP_N = 10
 	// DELIMITOR          = ';'
-	DELIMITOR                       = ' ' //Do not change this as this version support space seperated only
+	DELIMITOR                       = ' ' //Do not change this as this version support whitespace seperated only
 	DATAFILE_EXTENSION              = ".DAT"
 	MAX_FILES                       = 10000
 	MAX_NUMBERS                     = 100000
@@ -172,9 +172,11 @@ Press Y to continue, anther other to abort ...`)
 		return
 	}
 
-	ds := datasets.Analyze()
+	if err := datasets.Analyze(); err != nil {
+		return
+	}
 
-	ds.GenOutput(&param)
+	datasets.GenOutput(&param)
 	fmt.Printf("\n\n%v: Time consumed to complete all jobs:%v\n", time.Now(), time.Since(now))
 
 }
